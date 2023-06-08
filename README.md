@@ -8,3 +8,17 @@ General purpose discord bot
 - server info
 - chat level system (maybe?)
 - moderation system thing (maybe?)
+
+## How to setup
+
+### Requirements
+
+- rust
+- Internet connection (duh)
+
+``
+cargo b -r
+./target/release/pingussy
+``
+
+replace TOKEN with your bot token in "stuff.conf" and restart the bot. It should work now!
