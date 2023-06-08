@@ -17,6 +17,7 @@ pub use serenity::{client::Context,
     model::channel::Message,
     Client,
 };
+use serenity::model::channel::Embed;
 
 use crate::config::{create_config, CONFIG};
 
@@ -61,6 +62,20 @@ async fn main() {
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     msg.reply(ctx, "Pong!").await?;
 
-    println!("sent msg");
+    println!("sent Pong!");
     Ok(())
 }
+
+
+
+/*
+pub fn fake() {
+    let embed_funny = Embed::fake(|e| {
+        e.title("Haha funny").description("69420").field(
+            "lOl",
+            "ehhh, idk haha funny",
+            false,
+        )
+    });
+}
+*/
