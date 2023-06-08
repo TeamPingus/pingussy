@@ -1,5 +1,5 @@
 # pingussy
-Blazingly fast and memory safe general purpose discord bot :rocket: :rocket: :rocket:
+Blazingly fast and memory safe general purpose discord bot :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket: :rocket:  :crab: :crab: :crab: :crab: :crab: :crab: :crab: :crab: :crab: :crab: :crab: :crab: 
 
 ## Planned features:
 
