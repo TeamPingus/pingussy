@@ -18,6 +18,7 @@ Blazingly fast and memory safe general purpose discord bot :rocket: :rocket: :ro
 
 ``
 cargo b -r
+
 ./target/release/pingussy
 ``
 
