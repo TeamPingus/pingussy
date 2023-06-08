@@ -20,6 +20,7 @@ Blazingly fast and memory safe general purpose discord bot :rocket: :rocket: :ro
 cargo b -r
 
 ./target/release/pingussy
+
 ``
 
 replace TOKEN with your bot token in "stuff.conf" and restart the bot. It should work now!
