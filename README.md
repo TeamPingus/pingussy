@@ -1,5 +1,5 @@
 # pingussy
-General purpose discord bot
+Blazingly fast and memory safe general purpose discord bot :rocket: :rocket: :rocket:
 
 ## Planned features:
 
@@ -13,7 +13,7 @@ General purpose discord bot
 
 ### Requirements
 
-- rust
+- rust (duh)
 - Internet connection (duh)
 
 ``
