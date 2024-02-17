@@ -22,18 +22,16 @@ use serenity::all::{CreateEmbed};
 use serenity::async_trait;
 use serenity::builder::{CreateMessage, EditChannel};
 use serenity::framework::standard::buckets::{LimitedFor};
-use serenity::framework::standard::macros::{check, command, group, help, hook};
+use serenity::framework::standard::macros::{command, group, help, hook};
 use serenity::framework::standard::{
     help_commands,
     Args,
     BucketBuilder,
     CommandGroup,
-    CommandOptions,
     CommandResult,
     Configuration,
     DispatchError,
     HelpOptions,
-    Reason,
     StandardFramework,
 };
 use serenity::gateway::ShardManager;
@@ -43,7 +41,6 @@ use serenity::model::gateway::{GatewayIntents, Ready};
 use serenity::model::id::UserId;
 use serenity::model::permissions::Permissions;
 use serenity::prelude::*;
-use serenity::utils::{content_safe, ContentSafeOptions};
 
 // A container type is created for inserting into the Client's `data`, which allows for data to be
 // accessible across all events and framework commands, or anywhere else that has a copy of the
@@ -70,17 +67,17 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(about, am_i_admin, say, ping, some_long_command)]
+#[commands(about, am_i_admin, ping, some_long_command)]
 struct General;
 
 #[group]
-#[owners_only]
+#[required_permissions(ADMINISTRATOR)]
 // Limit all commands to be guild-restricted.
 #[only_in(guilds)]
 // Summary only appears when listing multiple groups.
-#[summary = "Commands for server owners"]
+#[summary = "Commands for server admins"]
 #[commands(slow_mode, mod_command, commands)]
-struct Owner;
+struct Admins;
 
 // The framework provides two built-in help commands for you to use. But you can also make your own
 // customized help command that forwards to the behaviour of either of them.
@@ -267,7 +264,7 @@ async fn main() {
         // #name is turned all uppercase
         .help(&MY_HELP)
         .group(&GENERAL_GROUP)
-        .group(&OWNER_GROUP);
+        .group(&ADMINS_GROUP);
 
     framework.configure(
         Configuration::new().with_whitespace(true)
@@ -325,6 +322,7 @@ async fn commands(ctx: &Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
+/*
 // Repeats what the user passed as argument but ensures that user and role mentions are replaced
 // with a safe textual alternative.
 // In this example channel mentions are excluded via the `ContentSafeOptions`.
@@ -356,39 +354,7 @@ async fn say(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
         },
     };
 }
-
-// A function which acts as a "check", to determine whether to call a command.
-//
-// In this case, this command checks to ensure you are the owner of the message in order for the
-// command to be executed. If the check fails, the command is not called.
-#[check]
-#[name = "Owner"]
-#[rustfmt::skip]
-async fn owner_check(
-    _: &Context,
-    msg: &Message,
-    _: &mut Args,
-    _: &CommandOptions,
-) -> Result<(), Reason> {
-    // Replace 7 with your ID to make this check pass.
-    //
-    // 1. If you want to pass a reason alongside failure you can do:
-    //    `Reason::User("Lacked admin permission.".to_string())`,
-    //
-    // 2. If you want to mark it as something you want to log only:
-    //    `Reason::Log("User lacked admin permission.".to_string())`,
-    //
-    // 3. If the check's failure origin is unknown you can mark it as such:
-    //    `Reason::Unknown`
-    //
-    // 4. If you want log for your system and for the user, use:
-    //    `Reason::UserAndLog { user, log }`
-    if msg.author.id != 7 {
-        return Err(Reason::User("Lacked owner permission".to_string()));
-    }
-
-    Ok(())
-}
+*/
 
 #[command]
 async fn some_long_command(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
@@ -423,8 +389,6 @@ async fn about(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    // The shard manager is an interface for mutating, stopping, restarting, and retrieving
-    // information about shards.
     let data = ctx.data.read().await;
 
     let shard_manager = match data.get::<ShardManagerContainer>() {
@@ -437,9 +401,6 @@ async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     };
 
     let runners = shard_manager.runners.lock().await;
-
-    // Shards are backed by a "shard runner" responsible for processing events over the shard, so
-    // we'll get the information about the shard runner for the shard this command was sent over.
     let runner = match runners.get(&ctx.shard_id) {
         Some(runner) => runner,
         None => {
@@ -514,7 +475,7 @@ async fn mod_command(ctx: &Context, msg: &Message, _args: Args) -> CommandResult
     Ok(())
 }
 
-// This will only be called if preceded by the `upper`-command.
+
 #[command]
 #[aliases("sub-command", "secret")]
 #[description("This is `mod`'s sub-command.")]
