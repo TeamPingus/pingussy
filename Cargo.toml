@@ -1,13 +1,12 @@
 [package]
 name = "pingussy"
 version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Blexyel <passihd@pingusmc.org>"]
+edition = "2018"
 
 [dependencies]
-serenity = "0.11.5"
-serde = "1.0.164"
-tokio = { version = "1.5.0", features = ["full"] }
 hocon = "0.9.0"
 lazy_static = "1.4.0"
+serde = "1.0.196"
+serenity = "0.12.0"
+tokio = "1.36.0"

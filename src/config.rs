@@ -2,10 +2,11 @@ use hocon::HoconLoader;
 use serde::Deserialize;
 use std::fs::File;
 use std::io::Write;
+use lazy_static::lazy_static;
 
 pub fn create_config() -> std::io::Result<()> {
     let mut file = File::create("stuff.conf")?;
-    file.write_all(b"{ token: TOKEN }")?;
+    file.write_all(b"{ \n   token: TOKEN\n}")?;
     Ok(())
 }
 
